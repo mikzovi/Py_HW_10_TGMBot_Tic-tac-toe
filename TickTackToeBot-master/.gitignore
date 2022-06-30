@@ -1,7 +1,0 @@
-# MacOs-specific files
-.DS_Store
-.idea
-__pycache__
-
-env.txt
-botenv
