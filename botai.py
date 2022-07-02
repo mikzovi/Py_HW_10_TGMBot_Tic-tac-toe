@@ -21,8 +21,8 @@ def my_random(local_field: str):  # случайно выбраем незаня
     local_field = local_field.replace('X', '').replace('O', '')
     return local_field[randint(0, len(local_field)-1)]
 
-# для mega_brain
 
+# для mega_brain
 
 def win_triple(triple: str, my_char):  # triple - строка из 3-х символов (цифры и Х и О)
     s = triple.replace(my_char, '')  # чистим X или O - что на вход дали

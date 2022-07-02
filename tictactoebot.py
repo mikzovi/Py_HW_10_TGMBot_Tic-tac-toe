@@ -10,11 +10,13 @@ game_state_hdl = ConversationHandler(
     entry_points=[CommandHandler('new_game', cmd_handlers.new_game)],
     states={
         GameState.BOT_MODE: [CallbackQueryHandler(
-            cmd_handlers.bot_mode)],
+            cmd_handlers.mode_bot)],
         GameState.START_TURN: [CallbackQueryHandler(
             cmd_handlers.select)],
         GameState.USER_TURN: [CallbackQueryHandler(
             cmd_handlers.turn, pattern=digit_pattern)],
+        GameState.GAME_MODE: [CallbackQueryHandler(
+            cmd_handlers.game_mode)],    
     },
     fallbacks=[CommandHandler('end_game', cmd_handlers.end_game)]
 )

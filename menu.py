@@ -1,5 +1,10 @@
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 
+def create_game_menu(dict_game: dict) -> InlineKeyboardMarkup:
+
+    menu_layot = [[InlineKeyboardButton(
+        dict_game[val], callback_data=str(val)) for val in ('new_game', 'end_game')]]
+    return InlineKeyboardMarkup(menu_layot, resize_keyboard=True)
 
 def create_mode_menu(dict_mode: dict) -> InlineKeyboardMarkup:
 

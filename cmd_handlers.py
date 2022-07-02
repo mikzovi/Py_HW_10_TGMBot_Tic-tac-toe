@@ -1,6 +1,7 @@
+from turtle import clear
 from telegram import Update, ParseMode
 from telegram.ext import CallbackContext, ConversationHandler
-from menu import create_choose_menu, create_board, create_mode_menu
+from menu import create_choose_menu, create_board, create_mode_menu, create_game_menu
 from const import GameState
 import tictactoe_model
 import bot_ai_wrap
@@ -23,6 +24,7 @@ def start(update: Update, context: CallbackContext):
 
 
 def new_game(update: Update, context: CallbackContext):
+    
     user = update.effective_user.first_name
     msg = f"\tПривет, {user}! \nВыберите интеллект бота..."
 
@@ -31,8 +33,29 @@ def new_game(update: Update, context: CallbackContext):
 
     return GameState.BOT_MODE
 
+def game_mode(update: Update, context: CallbackContext):
+    
+    query = update.callback_query
+    query.answer()
 
-def bot_mode(update: Update, context: CallbackContext):
+    mode_game = query.data
+
+    if mode_game == 'new_game':
+        update.effective_chat.send_message("А теперь на деньги! ;)")
+        
+        user = update.effective_user.first_name 
+        msg = f"\tПривет, {user}! \nВыберите интеллект бота..."
+
+        mode_menu = create_mode_menu(tictactoe_model.mode_dict)
+        update.effective_chat.send_message(text=msg,reply_markup=mode_menu)
+
+        return GameState.BOT_MODE
+    else:        
+        update.effective_chat.send_message("До новых встреч!")
+        return ConversationHandler.END
+    
+
+def mode_bot(update: Update, context: CallbackContext):
     global bot_mode
     query = update.callback_query
     query.answer()
@@ -55,10 +78,14 @@ def turn(update: Update, context: CallbackContext):
 
     if tictactoe_model.check_winers(moves, cur_sym, user_choice):
         game_board = create_board(moves)
-        query.edit_message_text(text="Вы выиграли!\nПопробуем еще разок?",
+        query.edit_message_text(text="Вы выиграли!",
                                 reply_markup=game_board)
+        
+        game_menu = create_game_menu(tictactoe_model.game_diсt)
+        # query.edit_message_reply_markup(reply_markup=game_menu)
+        update.effective_chat.send_message('Отличный результат! Попробуйте следующий уровень :)',reply_markup=game_menu)
 
-        return ConversationHandler.END
+        return GameState.GAME_MODE 
 
     bot_choice = bot_ai_wrap.get_bot_turn(moves, next_sym, bot_mode)
     moves[bot_choice] = next_sym
@@ -66,17 +93,23 @@ def turn(update: Update, context: CallbackContext):
     if tictactoe_model.check_winers(moves, next_sym, bot_choice):
         game_board = create_board(moves)
         query.edit_message_text(
-            text="Вы проиграли(((\nПопробуете отыграться?!!!",  reply_markup=game_board)
-
-        return ConversationHandler.END
+            text="Вы проиграли(((",  reply_markup=game_board)
+        
+        game_menu = create_game_menu(tictactoe_model.game_diсt)
+        # query.edit_message_reply_markup(reply_markup=game_menu)
+        update.effective_chat.send_message('Ничего страшного, не на корову же играем...',reply_markup=game_menu)
+        return GameState.GAME_MODE 
 
     if not tictactoe_model.has_turns(moves):
         msg = "Ничья"
         game_board = create_board(moves)
         query.edit_message_text(
-            text="Ничья, больше ходов нет.\nПопробуем еще разок?", reply_markup=game_board)
-
-        return ConversationHandler.END
+            text="Ничья, больше ходов нет.", reply_markup=game_board)
+        
+        game_menu = create_game_menu(tictactoe_model.game_diсt)
+        # query.edit_message_reply_markup(reply_markup=game_menu)
+        update.effective_chat.send_message('Игра достойных соперников!',reply_markup=game_menu)
+        return GameState.GAME_MODE
 
     msg = f"Ваш ход: {query.data}\nХод бота: {bot_choice + 1}"
     game_board = create_board(moves)
@@ -116,7 +149,6 @@ def select(update: Update, context: CallbackContext):
         msg = f"Ваш выбор: {cur_sym}\nПервым начинают - {next_sym}.\nИ ход соперника - {bot_choice + 1}"
 
     game_board = create_board(moves)
-
     query.edit_message_text(text=msg, reply_markup=game_board)
 
     return GameState.USER_TURN

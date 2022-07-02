@@ -11,7 +11,7 @@ def converter(val: str) -> str:
 
 def list2str(moves: list):
     new_m = tuple(map(converter, moves))
-    return "".join(new_m)
+    return ''.join(new_m)
 
 
 def get_bot_turn(moves: list, sym: str, mode=2) -> int:

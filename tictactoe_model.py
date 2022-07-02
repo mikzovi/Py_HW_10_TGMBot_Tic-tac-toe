@@ -4,7 +4,7 @@ from random import choice
 symbols = ('🤠', '😈')
 sym_dict = {'🤠': 'X', '😈': 'O'}
 mode_dict = {1: 'Тупой', 2: 'Творческий', 3: 'Профессионал'}
-
+game_diсt = {'new_game': 'Новая игра', 'end_game': 'Выйти из игры'}
 
 def init_board(size=3):
     return [str(i) for i in range(1, size**2 + 1)]
