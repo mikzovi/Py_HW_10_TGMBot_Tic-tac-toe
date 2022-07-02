@@ -1,4 +1,4 @@
-import tictactoebot as bot
+import tictactoebot 
 
 if __name__ == "__main__":
-    bot.run()
+    tictactoebot.run()

@@ -36,7 +36,7 @@ def run():
 
     updater = Updater(
         token=bot_token, use_context=True)
-    print("Tick tack toe bot starterd work...")
+    print("Tic-Tac-Toe bot started work...")
 
     dp = updater.dispatcher
     init_handlers(dp)

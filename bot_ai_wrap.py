@@ -1,12 +1,12 @@
 from random import choice
-import botai as bai
-import tictactoe_model as toe
+import botai
+import tictactoe_model
 
 
 def converter(val: str) -> str:
     if val.isdigit():
         return val
-    return toe.sym_dict[val]
+    return tictactoe_model.sym_dict[val]
 
 
 def list2str(moves: list):
@@ -21,10 +21,10 @@ def get_bot_turn(moves: list, sym: str, mode=2) -> int:
         return get_rand_turn(moves)
     else:
         free_moves = tuple(filter(str.isdigit, moves))
-        res = int(bai.get_bot_turn(list2str(moves), toe.sym_dict[sym], mode))
+        res = int(botai.get_bot_turn(list2str(moves), tictactoe_model.sym_dict[sym], mode))
         while moves[res - 1] not in free_moves:
-            res = int(bai.get_bot_turn(
-                list2str(moves), toe.sym_dict[sym], mode))
+            res = int(botai.get_bot_turn(
+                list2str(moves), tictactoe_model.sym_dict[sym], mode))
         return res - 1
 
 

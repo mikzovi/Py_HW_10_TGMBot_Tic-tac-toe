@@ -13,7 +13,7 @@ moves = tic.init_board
 
 
 def start(update: Update, context: CallbackContext):
-    welcome_msg = '''<b>TicTac4Bot</b> - простой бот для игры в крестики-нолики с ИИ
+    welcome_msg = '''<b>Tic-Tac-Toe Bot</b> - простой бот для игры в крестики-нолики с элементами искустенного интеллекта
             Команды:
             <i>/new_game</i> - Начало новой игры
             <i>/end_game</i> - Завершить игру

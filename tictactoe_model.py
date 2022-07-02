@@ -1,9 +1,9 @@
 from math import sqrt
 from random import choice
 
-symbols = ('❌', '⭕')
-sym_dict = {'❌': 'X', '⭕': 'O'}
-mode_dict = {1: 'Dummy', 2: 'Random', 3: 'MegaBrain'}
+symbols = ('🤠', '😈')
+sym_dict = {'🤠': 'X', '😈': 'O'}
+mode_dict = {1: 'Тупой', 2: 'Творческий', 3: 'Профессионал'}
 
 
 def init_board(size=3):
@@ -33,3 +33,4 @@ def has_turns(moves: list) -> int:
 
 def get_first_turn(syms: tuple):
     return choice(syms)
+
