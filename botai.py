@@ -1,9 +1,9 @@
 # Мозги для бота
 from random import randint
-import data_module as dm
+import data_module
 
 
-# щаг бота - в зависимости от алгоритма
+# шаг бота - в зависимости от алгоритма
 def get_bot_turn(local_field: str, my_char, algorithm):
     if algorithm == 2:
         return my_random(local_field)          # случайный
@@ -33,10 +33,10 @@ def win_triple(triple: str, my_char):  # triple - строка из 3-х сим�
 
 # поверка, можем ли мы победить одним ходом, когда играем за my_char
 def i_can_win(local_field, my_char):
-    triples = [local_field[dm.win_patterns[i][0]] +
-               local_field[dm.win_patterns[i][1]] +
-               local_field[dm.win_patterns[i][2]]
-               for i in range(len(dm.win_patterns))]  # список заполненных верт, гориз и диагоналей
+    triples = [local_field[data_module.win_patterns[i][0]] +
+               local_field[data_module.win_patterns[i][1]] +
+               local_field[data_module.win_patterns[i][2]]
+               for i in range(len(data_module.win_patterns))]  # список заполненных верт, гориз и диагоналей
     k = ''
     for i in range(len(triples)):  # проверка тройки символов на то, что одного из ни нехватает
         # для полного заполнения

@@ -1,22 +1,22 @@
 from telegram.ext import (Dispatcher, Updater, CommandHandler,
                           ConversationHandler, CallbackQueryHandler, MessageHandler)
-import cmd_handlers as chdl
+import cmd_handlers
 from const import GameState
 
 digits = "|".join([str(i) for i in range(1, 10)])
 digit_pattern = f"^{digits}$"
 
 game_state_hdl = ConversationHandler(
-    entry_points=[CommandHandler('new_game', chdl.new_game)],
+    entry_points=[CommandHandler('new_game', cmd_handlers.new_game)],
     states={
         GameState.BOT_MODE: [CallbackQueryHandler(
-            chdl.bot_mode)],
+            cmd_handlers.bot_mode)],
         GameState.START_TURN: [CallbackQueryHandler(
-            chdl.select)],
+            cmd_handlers.select)],
         GameState.USER_TURN: [CallbackQueryHandler(
-            chdl.turn, pattern=digit_pattern)],
+            cmd_handlers.turn, pattern=digit_pattern)],
     },
-    fallbacks=[CommandHandler('end_game', chdl.end_game)]
+    fallbacks=[CommandHandler('end_game', cmd_handlers.end_game)]
 )
 
 
@@ -27,7 +27,7 @@ def get_tocken() -> str:
 
 
 def init_handlers(dispather: Dispatcher):
-    dispather.add_handler(CommandHandler(['start', 'help'], chdl.start))
+    dispather.add_handler(CommandHandler(['start', 'help'], cmd_handlers.start))
     dispather.add_handler(game_state_hdl)
 
 
