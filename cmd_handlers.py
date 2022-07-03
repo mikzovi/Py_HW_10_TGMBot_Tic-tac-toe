@@ -44,7 +44,7 @@ def game_mode(update: Update, context: CallbackContext):
         update.effective_chat.send_message("А теперь на деньги! ;)")
         
         user = update.effective_user.first_name 
-        msg = f"\tПривет, {user}! \nВыберите интеллект бота..."
+        msg = f"\tСпасибо, что играете в нашу игру, {user}! \nВыберите интеллект бота..."
 
         mode_menu = create_mode_menu(tictactoe_model.mode_dict)
         update.effective_chat.send_message(text=msg,reply_markup=mode_menu)
